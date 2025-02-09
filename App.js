@@ -1,15 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-const parent = React.createElement("div", { id: "parent" }, [
-  React.createElement("div", { id: "child" }, [
-    React.createElement("h1", {}, "im h1 Tag"),
-    React.createElement("h2", {}, "im h2 Tag"),
-  ]),
-  React.createElement("div", { id: "child2" }, [
-    React.createElement("h1", {}, "im h1 Tag"),
-    React.createElement("h2", {}, "im h2 Tag"),
-  ]),
-]);
+const Title = () => (
+  <h1 className="heading" tabIndex="5">
+    This is jsx
+  </h1>
+);
+const data = 1000;
+const title = <h1>title</h1>;
+const HeadingComponent = () => (
+  <div id="container">
+    <h1>component</h1>
+    {title}
+    <Title />
+    <Title></Title>
+    {Title()}
+    <h1> {data}</h1>
+  </div>
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(parent);
+root.render(<HeadingComponent />);
