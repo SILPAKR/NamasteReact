@@ -10,6 +10,7 @@ const RestaurantMenu = () => {
   const { id } = useParams();
   const resInfo = useRestaurantMenu(id);
   const onlineStatus = useOnlineStatus();
+  const [showIndex, setShowIndex] = useState(0);
   if (onlineStatus === false)
     return (
       <h1>Looks like you are offline..plz check your internet connection</h1>
@@ -20,14 +21,12 @@ const RestaurantMenu = () => {
 
   const { itemCards } =
     resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
-  console.log("hii", resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR);
   const categories =
     resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
       (c) =>
         c.card?.card?.["@type"] ===
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
-  console.log(categories);
 
   return (
     <div className="text-center">
@@ -36,8 +35,13 @@ const RestaurantMenu = () => {
         {cuisines.join(",")} - {costForTwoMessage}
       </p>
       {/* Categories accordions */}
-      {categories.map((category) => (
-        <RestaurantCategory data={category?.card?.card} />
+      {categories.map((category, index) => (
+        <RestaurantCategory
+          key={category?.card?.card.title}
+          data={category?.card?.card}
+          showItems={index === showIndex ? true : false}
+          setShowIndex={() => setShowIndex(index === showIndex ? null : index)}
+        />
       ))}
     </div>
   );
